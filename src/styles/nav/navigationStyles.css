@@ -1,0 +1,246 @@
+.main-navigation {
+  background-color: #FFEBD3;
+  padding: 0.5rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid #4b3832;
+}
+
+.main-navigation__content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+}
+
+.main-navigation__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.main-navigation__logo-link {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.main-navigation__brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4b3832;
+  white-space: nowrap;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.main-navigation__logo {
+  height: 50px;
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.main-navigation__logo:hover {
+  transform: scale(1.05);
+}
+
+.main-navigation__section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.main-navigation__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.main-navigation__item {
+  list-style: none;
+}
+
+.main-navigation__link {
+  color: #4b3832;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  display: block;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.main-navigation__link.is-active,
+.main-navigation__link:hover {
+  background-color: #4b3832;
+  color: #ffffff;
+}
+
+.main-navigation__account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.main-navigation__auth-button {
+  background-color: #2c7a7b;
+  color: #ffffff;
+  border: none;
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.main-navigation__auth-button:hover {
+  background-color: #236b6d;
+}
+
+.main-navigation__auth-button--logout {
+  background-color: #d32f2f;
+}
+
+.main-navigation__auth-button--logout:hover {
+  background-color: #c53030;
+}
+
+.main-navigation__menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #4b3832;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.main-navigation__menu-toggle:hover {
+  color: #4b3832;
+}
+
+.main-navigation__mobile-menu {
+  display: none;
+}
+
+.main-navigation__mobile-account {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .main-navigation {
+    padding: 0.5rem;
+  }
+
+  .main-navigation__brand {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .main-navigation__brand-name {
+    font-size: 1.125rem;
+  }
+
+  .main-navigation__logo {
+    height: 40px;
+  }
+
+  .main-navigation__section {
+    display: none;
+  }
+
+  .main-navigation__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .main-navigation__item {
+    margin: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .main-navigation__item:last-child {
+    border-bottom: none;
+  }
+
+  .main-navigation__link {
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .main-navigation__auth-button {
+    display: none;
+  }
+
+  .main-navigation__menu-toggle {
+    display: block;
+  }
+
+  .main-navigation__mobile-menu.is-open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #596c79;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-navigation__content {
+    flex-wrap: wrap;
+  }
+
+  .main-navigation__brand {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .main-navigation__logo-link {
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .main-navigation__brand-name {
+    font-size: 1rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .main-navigation__account {
+    margin-left: auto;
+  }
+}

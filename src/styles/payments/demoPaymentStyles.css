@@ -1,0 +1,98 @@
+.demo-payment-page {
+  min-height: 100vh;
+  background: #FFEBD3;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-payment-page__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.demo-payment-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.demo-payment-card__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.demo-payment-card__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  color: #4b3832;
+  margin-bottom: 0.75rem;
+}
+
+.demo-payment-banner {
+  background: #fff8e1;
+  border: 1px solid #f0c040;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #7a5c00;
+  margin: 1rem 0 1.5rem;
+  line-height: 1.5;
+}
+
+.demo-payment-card__info {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.demo-payment-card__confirm {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  background-color: #4b3832;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.demo-payment-card__confirm:hover {
+  background-color: #5a4139;
+}
+
+.demo-payment-card__cancel {
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.demo-payment-card__cancel:hover {
+  color: #4b3832;
+}
+
+.demo-payment-unavailable {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #666;
+}
+
+.demo-payment-page__title {
+  font-family: 'Playfair Display', serif;
+  color: #4b3832;
+}

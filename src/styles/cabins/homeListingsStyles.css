@@ -1,0 +1,53 @@
+.home-listings__search {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 0 2rem;
+}
+
+.home-listings__search-input {
+  max-width: 600px;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #4b3832;
+  border-radius: 9999px;
+  background-color: #fff;
+}
+
+.home-listings__search-input:focus {
+  outline: none;
+  border-color: #596c79;
+}
+
+.home-listings__search-input::placeholder { color: #666; }
+.home-listings__results { margin-top: 2rem; }
+
+.home-listings__section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #4b3832;
+}
+
+.home-listings__empty-state {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .home-listings__section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .home-listings__empty-state { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .home-listings__search { padding: 0 1rem; }
+  .home-listings__section-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .home-listings__empty-state { font-size: 0.9rem; }
+}

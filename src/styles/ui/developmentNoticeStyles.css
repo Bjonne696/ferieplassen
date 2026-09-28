@@ -1,0 +1,126 @@
+.development-notice {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  border: 2px solid #ffc107;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.development-notice__icon {
+  background-color: #ff9800;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.development-notice__content {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.75;
+  color: #4b3832;
+}
+
+.development-notice__content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #744210;
+}
+
+.development-notice__content p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  color: #856404;
+}
+
+.development-notice__content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.development-notice__content li {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  color: #856404;
+}
+
+.development-notice__close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #856404;
+  cursor: pointer;
+  padding: 0.25rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.development-notice__close-button:hover {
+  background-color: rgba(133, 100, 4, 0.1);
+  color: #744210;
+}
+
+.development-notice__close-button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .development-notice {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+
+  .development-notice__icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1.125rem;
+  }
+
+  .development-notice__content h3 {
+    font-size: 1rem;
+  }
+
+  .development-notice__content p {
+    font-size: 0.875rem;
+  }
+
+  .development-notice__content ul {
+    padding-left: 1rem;
+  }
+
+  .development-notice__content li {
+    font-size: 0.75rem;
+  }
+
+  .development-notice__close-button {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.125rem;
+    width: 28px;
+    height: 28px;
+  }
+}

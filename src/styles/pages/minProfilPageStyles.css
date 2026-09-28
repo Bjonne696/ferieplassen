@@ -1,0 +1,14 @@
+.profile-page-layout > .profile-page {
+  padding: 2rem;
+  min-height: 60vh;
+  background-color: #ffebd3;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.profile-page__title {
+  color: #4a2f1b;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}

@@ -1,0 +1,290 @@
+.discount-code-manager {
+  margin: 2rem 0;
+  padding: 2rem;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.discount-code-manager__title {
+  margin: 0 0 1.5rem;
+  color: #4b3832;
+}
+
+.discount-code-manager__form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.discount-code-manager__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.discount-code-manager__field.align-end {
+  align-self: flex-end;
+}
+
+.discount-code-manager__label {
+  margin-bottom: 0.5rem;
+  color: #4b3832;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.discount-code-manager__input,
+.discount-code-manager__select {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.discount-code-manager__select {
+  background: #fff;
+}
+
+.discount-code-manager__input:focus,
+.discount-code-manager__select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.discount-code-manager__button {
+  padding: 0.8rem 1.5rem;
+  border: 0;
+  border-radius: 6px;
+  background: #667eea;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.discount-code-manager__button:hover:not(:disabled) {
+  background: #5568d3;
+}
+
+.discount-code-manager__button[data-variant="delete"] {
+  background: #dc3545;
+}
+
+.discount-code-manager__button[data-variant="delete"]:hover:not(:disabled) {
+  background: #c82333;
+}
+
+.discount-code-manager__button.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.discount-code-manager__button.with-margin {
+  margin-right: 0.5rem;
+}
+
+.discount-code-manager__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.discount-code-manager__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+.discount-code-manager__table-heading {
+  padding: 1rem;
+  border-bottom: 2px solid #dee2e6;
+  background: #f8f9fa;
+  color: #4b3832;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.discount-code-manager__table-cell {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.discount-code-manager__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.discount-code-manager__status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.discount-code-manager__status-badge[data-active="true"] {
+  background: #d4edda;
+  color: #155724;
+}
+
+.discount-code-manager__status-badge[data-active="false"] {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.discount-code-manager__success-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  background: #d4edda;
+  color: #155724;
+}
+
+.discount-code-manager__error-message {
+  border-color: #ffcccc;
+  background: #fff0f0;
+  color: #c00;
+}
+
+.discount-code-manager__empty-message {
+  margin-top: 2rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .discount-code-manager {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+  }
+
+  .discount-code-manager__title {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+
+  .discount-code-manager__form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .discount-code-manager__button {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .discount-code-manager__button.small {
+    width: auto;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .discount-code-manager__button.with-margin {
+    margin-right: 0.4rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .discount-code-manager__table {
+    margin-top: 1.5rem;
+  }
+
+  .discount-code-manager__table-heading {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .discount-code-manager__table-cell {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .discount-code-manager {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  .discount-code-manager__title {
+    font-size: 1.15rem;
+  }
+
+  .discount-code-manager__input,
+  .discount-code-manager__select {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .discount-code-manager__table {
+    margin-top: 1rem;
+  }
+
+  .discount-code-manager__table thead,
+  .discount-code-manager__table-heading {
+    display: none;
+  }
+
+  .discount-code-manager__table tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 0;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  .discount-code-manager__table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .discount-code-manager__table-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 0;
+  }
+
+  .discount-code-manager__table-cell::before {
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+    color: #4b3832;
+    font-weight: 600;
+    content: attr(data-label);
+  }
+
+  .discount-code-manager__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.3rem;
+  }
+
+  .discount-code-manager__button.small {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.3rem;
+  }
+
+  .discount-code-manager__button.with-margin {
+    margin-right: 0;
+  }
+
+  .discount-code-manager__status-badge {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .discount-code-manager__success-message {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .discount-code-manager__empty-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+}

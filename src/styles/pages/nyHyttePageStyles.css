@@ -1,0 +1,19 @@
+.new-cabin-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.new-cabin-page__main {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 2rem;
+  background-color: #ffebd3;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+  .new-cabin-page__main { padding: 1rem; }
+}

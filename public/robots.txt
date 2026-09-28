@@ -1,0 +1,26 @@
+# Robots.txt for ferieplassen.no
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ferieplassen.no/sitemap.xml
+
+# Disallow admin and authentication pages
+Disallow: /admin
+Disallow: /logg-inn
+Disallow: /registrer
+
+# Disallow user profile pages (private)
+Disallow: /profil
+Disallow: /min-profil
+
+# Allow all crawlers to access main content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Crawl delay for politeness (optional)
+Crawl-delay: 1

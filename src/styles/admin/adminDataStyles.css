@@ -1,0 +1,142 @@
+.admin-data {
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffebd3;
+}
+
+.admin-data__section-title {
+  margin-bottom: 1.5rem;
+  color: #4b3832;
+  font-size: 1.8rem;
+}
+
+.admin-data__table {
+  width: 100%;
+  min-width: 500px;
+  border-collapse: collapse;
+}
+
+.admin-data__table th,
+.admin-data__table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.admin-data__table th {
+  background-color: #f5f5f5;
+  color: #4b3832;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-data__table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.admin-data__table-heading {
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+  color: #4b3832;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-data__table-cell {
+  color: #4b3832;
+}
+
+.admin-data__delete-button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #a00;
+  border-radius: 0.5rem;
+  background-color: #ffdddd;
+  color: #a00;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.admin-data__delete-button:hover {
+  background-color: #ffcccc;
+}
+
+@media (max-width: 1024px) {
+  .admin-data {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-data {
+    padding: 1rem;
+  }
+
+  .admin-data__section-title {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+
+  .admin-data__table {
+    min-width: 400px;
+  }
+
+  .admin-data__table th,
+  .admin-data__table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-data {
+    padding: 0.75rem;
+  }
+
+  .admin-data__section-title {
+    font-size: 1.2rem;
+  }
+
+  .admin-data__table {
+    min-width: 100%;
+  }
+
+  .admin-data__table thead,
+  .admin-data__table-heading {
+    display: none;
+  }
+
+  .admin-data__table tr {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 0;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .admin-data__table td,
+  .admin-data__table-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  .admin-data__table td::before,
+  .admin-data__table-cell::before {
+    flex-shrink: 0;
+    margin-right: 1rem;
+    color: #4b3832;
+    font-weight: 600;
+    content: attr(data-label);
+  }
+
+  .admin-data__delete-button {
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}

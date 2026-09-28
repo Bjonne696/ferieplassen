@@ -1,0 +1,11 @@
+.cabin-detail-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.cabin-detail-page__main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #ffebd3;
+}

@@ -1,0 +1,27 @@
+.cabin-owner {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f9f6f0;
+  border-radius: 0.75rem;
+  border: 1px solid #e0e0e0;
+}
+
+.cabin-owner__avatar,
+.cabin-owner__avatar-placeholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cabin-owner__avatar-placeholder { background-color: #ccc; }
+
+.cabin-owner__details p {
+  margin: 0.25rem 0;
+  color: #4b3832;
+}
+
+.cabin-owner__details strong { font-weight: 600; }

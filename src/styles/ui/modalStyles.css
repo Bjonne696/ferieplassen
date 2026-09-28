@@ -1,0 +1,180 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal h2 {
+  margin-top: 0;
+  color: #4b3832;
+  text-align: center;
+}
+
+.modal label {
+  display: block;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+  color: #4b3832;
+}
+
+.modal textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-height: 100px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.modal textarea:focus {
+  outline: none;
+  border-color: #4b3832;
+}
+
+.modal .rdrWeekDay,
+.modal .rdrMonthName,
+.modal .rdrDateDisplayItem input,
+.modal .rdrDateDisplayItemActive input,
+.modal .rdrDayPassive .rdrDayNumber span,
+.modal .rdrDayDisabled .rdrDayNumber span {
+  color: #555f63;
+}
+
+.modal .rdrDay:not(.rdrDayPassive) .rdrInRange ~ .rdrDayNumber span,
+.modal .rdrDay:not(.rdrDayPassive) .rdrStartEdge ~ .rdrDayNumber span,
+.modal .rdrDay:not(.rdrDayPassive) .rdrEndEdge ~ .rdrDayNumber span,
+.modal .rdrDay:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span {
+  color: #fff;
+}
+
+.modal .rdrSelected,
+.modal .rdrInRange,
+.modal .rdrStartEdge,
+.modal .rdrEndEdge {
+  background-color: #176077;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.modal__actions button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #4b3832;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.modal__actions button:first-child {
+  background-color: white;
+  color: #4b3832;
+}
+
+.modal__actions button:first-child:hover {
+  background-color: #f5f5f5;
+}
+
+.modal__actions button:last-child {
+  background-color: #4b3832;
+  color: white;
+}
+
+.modal__actions button:last-child:hover {
+  background-color: #3a2b26;
+}
+
+.modal__actions button:last-child:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #4b3832;
+}
+
+.modal__error,
+.modal__success,
+.modal__warning {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.modal__error {
+  color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.1);
+}
+
+.modal__success {
+  color: #2e7d32;
+  background-color: rgba(46, 125, 50, 0.1);
+}
+
+.modal__warning {
+  color: #f57c00;
+  background-color: rgba(245, 124, 0, 0.1);
+}
+
+.modal__close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #4b3832;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease;
+}
+
+.modal__close-button:hover {
+  background-color: rgba(75, 56, 50, 0.1);
+}
+
+.modal__form-label {
+  display: block;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+  color: #4b3832;
+}
+
+.modal__form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.modal__form-textarea:focus {
+  outline: none;
+  border-color: #758592;
+}

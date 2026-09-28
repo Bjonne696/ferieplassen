@@ -1,0 +1,175 @@
+.new-cabin-form {
+  max-width: 800px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--color-white);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(75, 56, 50, 0.08);
+}
+
+.new-cabin-form__title {
+  font-family: 'Playfair Display', serif;
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.new-cabin-form__field { margin-bottom: 1.5rem; }
+
+fieldset.new-cabin-form__field {
+  border: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.new-cabin-form__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.new-cabin-form__input,
+.new-cabin-form__textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.new-cabin-form__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.new-cabin-form__input:focus,
+.new-cabin-form__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.new-cabin-form__input::placeholder,
+.new-cabin-form__textarea::placeholder { color: var(--color-text-muted); }
+
+.new-cabin-form__input[aria-invalid="true"],
+.new-cabin-form__textarea[aria-invalid="true"] { border-color: var(--color-error); }
+
+.new-cabin-form__checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1rem;
+}
+
+.new-cabin-form__checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.new-cabin-form__checkbox-group input[type="checkbox"] { width: auto; }
+
+.new-cabin-form__submit-button {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  width: 100%;
+  padding: 1.5rem 2rem;
+  font-size: 1.125rem;
+  margin-top: 2rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.new-cabin-form__submit-button:hover:not(:disabled) { background-color: var(--color-primary-hover); }
+
+.new-cabin-form__location-map {
+  height: 300px;
+  width: 100%;
+}
+
+.new-cabin-form__admin-alert {
+  background: #d4edda;
+  border: 1px solid #28a745;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.new-cabin-form__field-error {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0;
+}
+
+.new-cabin-form__file-info {
+  color: var(--color-primary);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.new-cabin-form__submit-error {
+  color: var(--color-error);
+  font-size: 0.9rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.new-cabin-form__address-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-top: 0.25rem;
+}
+
+.new-cabin-form__address-input {
+  flex: 1;
+  min-width: 130px;
+}
+
+.new-cabin-form__address-search-button {
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.new-cabin-form__address-search-button:hover:not(:disabled) { background-color: var(--color-primary-hover); }
+
+.new-cabin-form__address-search-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.new-cabin-form__address-search-error {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin: 0.4rem 0 0;
+}
+
+.new-cabin-form__tips { margin: 0.5rem 0 0; }
+.new-cabin-form__tip { margin-bottom: 0.25rem; }
+.new-cabin-form__facility-instructions { display: inline-block; margin-bottom: 0.5rem; }
+.new-cabin-form__address-label { width: 100%; }
+.new-cabin-form__address-input { box-sizing: border-box; }
+.new-cabin-form__coordinate-help { margin: 0 0 0.75rem; }
+.new-cabin-form__map-field .new-cabin-form__label { margin-top: 0.75rem; }
+
+@media (max-width: 480px) {
+  .new-cabin-form { padding: 1rem; }
+}

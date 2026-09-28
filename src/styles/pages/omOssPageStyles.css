@@ -1,0 +1,56 @@
+.about-page__article {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.about-page__title {
+  color: #8b4513;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.about-page__section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.about-page__section-title {
+  color: #8b4513;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.about-page__paragraph {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.about-page__closing-note {
+  font-style: italic;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.about-page__values {
+  list-style: none;
+  padding: 0;
+}
+
+.about-page__value {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.about-page__value::before {
+  content: '🏔️';
+  position: absolute;
+  left: 0;
+}

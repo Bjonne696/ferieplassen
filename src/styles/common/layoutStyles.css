@@ -1,0 +1,79 @@
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 20px rgba(75, 56, 50, 0.08);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-xl) 0;
+  padding: 0 var(--space-xl);
+}
+
+.search-bar__input,
+.page-search__input {
+  max-width: 600px;
+  padding: var(--space-md);
+  font-size: var(--font-size-base);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+}
+
+.search-bar__input:focus,
+.page-search__input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+}
+
+.search-bar__input::placeholder,
+.page-search__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.page-wrapper,
+.page-layout,
+.home-page,
+.new-cabin-page,
+.cabin-detail-page,
+.privacy-policy-page,
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.main-content,
+.page-layout__content,
+.home-page__content,
+.cabin-detail-page__main,
+.new-cabin-page__main {
+  flex: 1;
+  padding: 0 var(--space-xl) var(--space-2xl);
+  background-color: var(--color-background);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.centered-main-content,
+.centered-page-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-xl);
+}
+
+@media (max-width: 768px) {
+  .main-content,
+  .page-layout__content,
+  .home-page__content {
+    padding: 0 var(--space-md) var(--space-xl);
+  }
+}

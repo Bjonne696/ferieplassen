@@ -1,0 +1,51 @@
+:root {
+  --color-primary: #4b3832;
+  --color-primary-hover: #5a4139;
+  --color-secondary: #596c79;
+  --color-background: #ffebd3;
+  --color-white: #fff;
+  --color-text: #4b3832;
+  --color-text-light: #666;
+  --color-text-muted: #666;
+  --color-border: #ccc;
+  --color-border-dark: #4b3832;
+  --color-error: #d32f2f;
+  --color-error-background: #fee;
+  --color-error-border: #fcc;
+  --color-success: #3c763d;
+  --color-success-background: #d4edda;
+  --color-warning: #744210;
+  --color-warning-background: #fff5f5;
+  --color-warning-border: #fed7d7;
+  --color-accent: #2c7a7b;
+  --color-orange: #ffa500;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --radius-sm: 0.25rem;
+  --radius-base: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+}

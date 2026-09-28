@@ -1,0 +1,262 @@
+.profile-listings,
+.my-subscription-listings__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .profile-listings,
+  .my-subscription-listings__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.profile-listing-card {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(75, 56, 50, 0.08);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-listing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(75, 56, 50, 0.15);
+}
+
+.profile-listing-card__image,
+.profile-listing-card__image-placeholder {
+  width: 100%;
+  height: 180px;
+}
+
+.profile-listing-card__image {
+  object-fit: cover;
+}
+
+.profile-listing-card__image-placeholder {
+  background: linear-gradient(135deg, #f0ebe6 0%, #e0d6cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.profile-listing-card__body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-listing-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.profile-listing-card__title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #4b3832;
+  margin: 0;
+}
+
+.profile-listing-card__location {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-listing-card__price {
+  font-weight: 600;
+  color: #4b3832;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.profile-subscription-badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: #fce4ec;
+  color: #c62828;
+}
+
+.profile-subscription-badge[data-subscription-status="active"] {
+  background: #d4edda;
+  color: #155724;
+}
+
+.profile-subscription-badge[data-subscription-status="pending"] {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.profile-subscription-badge[data-subscription-status="past_due"] {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.profile-subscription-badge[data-subscription-status="canceled"] {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.profile-subscription-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.profile-subscription-info__detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.profile-listing-actions,
+.profile-confirmation-dialog__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.profile-confirmation-dialog__actions {
+  justify-content: center;
+}
+
+.profile-listing-actions__button {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #4b3832;
+  color: #fff;
+}
+
+.profile-listing-actions__button--view:hover:not(:disabled) {
+  background-color: #5a4139;
+}
+
+.profile-listing-actions__button--danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.profile-listing-actions__button--danger:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.profile-listing-actions__button--activate {
+  background-color: #667eea;
+  color: #fff;
+}
+
+.profile-listing-actions__button--activate:hover:not(:disabled) {
+  background-color: #5568d3;
+}
+
+.profile-listing-actions__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-listings__empty,
+.my-subscription-listings__empty {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.profile-listings__empty p,
+.my-subscription-listings__empty-message {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-listings__loading,
+.my-subscription-listings__loading {
+  text-align: center;
+  color: #666;
+  padding: 2rem;
+}
+
+.profile-confirmation-overlay,
+.listing-confirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.profile-confirmation-dialog {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.profile-confirmation-dialog h2 {
+  color: #4b3832;
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+}
+
+.profile-confirmation-dialog p {
+  color: #666;
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.profile-action-message {
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.profile-action-message[data-message-type="error"] {
+  background: #fee;
+  color: #c33;
+  border-left: 3px solid #c33;
+}
+
+.profile-action-message[data-message-type="success"] {
+  background: #d4edda;
+  color: #155724;
+  border-left: 3px solid #28a745;
+}

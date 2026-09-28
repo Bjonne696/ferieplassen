@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 5rem;
+  scroll-padding-bottom: calc(var(--cookie-banner-height, 0px) + 0.75rem);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body, 'Inter'), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--color-text, #4b3832);
+  background-color: var(--color-background, #FFEBD3);
+}
+
+#root {
+  min-height: 100vh;
+  padding-bottom: var(--cookie-banner-height, 0px);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading, 'Playfair Display'), serif;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* A visible keyboard indicator also applies where component styles remove
+   the mouse-focus outline. The extra type selector wins over styled :focus. */
+html :is(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid #17565c;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+}

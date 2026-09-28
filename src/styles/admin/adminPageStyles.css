@@ -1,0 +1,35 @@
+.admin-page {
+  min-height: 60vh;
+  padding: 3rem;
+  background-color: #ffebd3;
+}
+
+.admin-page__title {
+  margin-bottom: 3rem;
+  color: #4b3832;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 1.5rem;
+  }
+
+  .admin-page__title {
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-page {
+    padding: 1rem;
+  }
+
+  .admin-page__title {
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+  }
+}

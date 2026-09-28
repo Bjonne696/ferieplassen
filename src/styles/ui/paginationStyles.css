@@ -1,0 +1,19 @@
+.responsive-pagination {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.pagination__button[data-home="true"] {
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 480px) {
+  .responsive-pagination {
+    gap: 0.5rem;
+  }
+
+  .pagination__button[data-home="true"] {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}

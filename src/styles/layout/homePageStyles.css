@@ -1,0 +1,23 @@
+.home-page__content > h1 {
+  text-align: center !important;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: var(--font-size-4xl);
+}
+
+@media (max-width: 768px) {
+  .home-page__content > h1 {
+    font-size: var(--font-size-3xl);
+    margin-top: var(--space-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page__content > h1 {
+    font-size: var(--font-size-2xl);
+    margin-top: var(--space-lg);
+  }
+}

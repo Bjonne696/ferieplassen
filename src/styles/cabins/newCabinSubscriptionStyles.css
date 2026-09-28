@@ -1,0 +1,190 @@
+.new-cabin-subscription {
+  background: linear-gradient(135deg, #f9f6f0 0%, #faf7f2 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(75, 56, 50, 0.08);
+}
+
+.new-cabin-subscription__title {
+  color: #4b3832;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.new-cabin-subscription__plan-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.new-cabin-subscription__plan-card {
+  position: relative;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.new-cabin-subscription__plan-card--selected {
+  border-color: #4b3832;
+  background: #f9f6f0;
+}
+
+.new-cabin-subscription__plan-card:hover { background: #f9f6f0; }
+
+.new-cabin-subscription__plan-card:focus-within {
+  outline: 3px solid #4b3832;
+  outline-offset: 2px;
+}
+
+.new-cabin-subscription__plan-card input[type="radio"] {
+  position: relative;
+  z-index: 2;
+  margin-right: 0.5rem;
+  accent-color: #4b3832;
+}
+
+.new-cabin-subscription__plan-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.new-cabin-subscription__plan-label::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.new-cabin-subscription__plan-name {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: #4b3832;
+  font-weight: 600;
+}
+
+.new-cabin-subscription__plan-price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4b3832;
+  margin: 0.5rem 0;
+}
+
+.new-cabin-subscription__plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.new-cabin-subscription__plan-feature {
+  padding: 0.3rem 0;
+  color: #4b3832;
+}
+
+.new-cabin-subscription__plan-feature::before {
+  content: '✓ ';
+  font-weight: bold;
+  color: #28a745;
+  margin-right: 0.5rem;
+}
+
+.new-cabin-subscription__discount-section {
+  background: #f9f6f0;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.new-cabin-subscription__discount-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #4b3832;
+}
+
+.new-cabin-subscription__discount-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.new-cabin-subscription__discount-input:focus {
+  outline: none;
+  border-color: #4b3832;
+}
+
+.new-cabin-subscription__validate-button {
+  background: #4b3832;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.new-cabin-subscription__validate-button:hover:not(:disabled) { background: #5a4139; }
+
+.new-cabin-subscription__validate-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.new-cabin-subscription__discount-success {
+  background: #d4edda;
+  border: 1px solid #28a745;
+  color: #155724;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.new-cabin-subscription__discount-error,
+.new-cabin-subscription__submit-message--error {
+  background: #fee;
+  color: #c33;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid #c33;
+  margin-top: 0.5rem;
+}
+
+.new-cabin-subscription__information {
+  background: #e8f4f8;
+  border: 1px solid #bee5eb;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #0c5460;
+}
+
+.new-cabin-subscription__submit-message {
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+.new-cabin-subscription__submit-message--success {
+  background: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+@media (max-width: 768px) {
+  .new-cabin-subscription__plan-selector { grid-template-columns: 1fr; }
+}

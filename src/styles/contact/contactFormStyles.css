@@ -1,0 +1,118 @@
+.contact-form {
+  max-width: 800px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form__title {
+  margin-bottom: 2rem;
+  color: #4b3832;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.contact-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.contact-form__row--two-column {
+  grid-template-columns: 1fr 1fr;
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-form__label {
+  color: #4b3832;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.contact-form__input,
+.contact-form__textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.contact-form__input[aria-invalid="true"],
+.contact-form__textarea[aria-invalid="true"] {
+  border-color: #d32f2f;
+}
+
+.contact-form__input:focus,
+.contact-form__textarea:focus {
+  outline: none;
+  border-color: #4b3832;
+}
+
+.contact-form__input[aria-invalid="true"]:focus,
+.contact-form__textarea[aria-invalid="true"]:focus {
+  border-color: #d32f2f;
+}
+
+.contact-form__input:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+}
+
+.contact-form__textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.contact-form__submit {
+  width: 100%;
+  margin-top: 1.5rem;
+  background-color: #4b3832;
+  color: #fff;
+}
+
+.contact-form__submit:hover:not(:disabled) {
+  background-color: #5a4139;
+}
+
+.contact-form__success-alert {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #c3e6cb;
+  border-radius: 0.5rem;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.contact-form__error-message {
+  margin-top: 0.25rem;
+  color: #d32f2f;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .contact-form__row--two-column {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    padding: 1rem;
+  }
+}

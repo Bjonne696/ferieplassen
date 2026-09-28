@@ -1,0 +1,89 @@
+.booking-request-card {
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fffaf2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.booking-request-card__actions,
+.owner-requests__actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.booking-request-card__actions button,
+.owner-requests__actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.booking-request-card__actions .approve,
+.owner-requests__actions .approve {
+  background-color: #38a169;
+  color: white;
+}
+
+.booking-request-card__actions .approve:hover,
+.owner-requests__actions .approve:hover {
+  background-color: #2f855a;
+}
+
+.booking-request-card__actions .reject,
+.owner-requests__actions .reject {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.booking-request-card__actions .reject:hover,
+.owner-requests__actions .reject:hover {
+  background-color: #c53030;
+}
+
+.booking-request-card__info,
+.owner-requests__details {
+  margin: 0 0 0.5rem;
+  color: #4a2f1b;
+  line-height: 1.5;
+}
+
+.booking-request-card__info strong,
+.owner-requests__details strong {
+  color: #4b3832;
+}
+
+.booking-request-card__message,
+.owner-requests__message {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background-color: rgba(117, 133, 146, 0.1);
+  border-radius: 0.25rem;
+  font-style: italic;
+  color: #666;
+}
+
+.booking-requests__loading,
+.owner-requests__loading {
+  text-align: center;
+  color: #4b3832;
+  font-size: 1rem;
+  margin: 2rem 0;
+}
+
+.booking-requests__empty,
+.owner-requests__empty {
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: #f9f6f0;
+  border-radius: 0.5rem;
+}

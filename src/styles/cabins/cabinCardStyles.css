@@ -1,0 +1,95 @@
+.cabin-card-link {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 1rem;
+}
+
+.cabin-card-link:focus-visible {
+  outline: 3px solid #4b3832;
+  outline-offset: 3px;
+}
+
+.cabin-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 270px;
+  height: 400px;
+  box-sizing: border-box;
+}
+
+.cabin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cabin-card:hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid #4b3832;
+  border-radius: 1rem;
+  pointer-events: none;
+}
+
+.cabin-card__image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.cabin-card:hover .cabin-card__image {
+  transform: scale(1.02);
+}
+
+.cabin-card__info {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cabin-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cabin-card:hover .cabin-card__title {
+  color: #2c7a7b;
+}
+
+.cabin-card__location {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cabin-card__price {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #4b3832;
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .cabin-card {
+    width: 100%;
+    max-width: 270px;
+    height: 400px;
+    margin: 0 auto;
+  }
+  .cabin-card:hover { transform: none; }
+}

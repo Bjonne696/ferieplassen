@@ -1,0 +1,127 @@
+.create-listing-card {
+  color: inherit;
+  text-decoration: none;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+  height: 400px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f5f0ed 0%, #FFEBD3 100%);
+  border-radius: 1rem;
+  border: 2px dashed #4b3832;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.create-listing-card--grid {
+  position: relative;
+}
+
+.create-listing-card--grid:hover {
+  transform: translateY(-2px);
+}
+
+.create-listing-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-style: solid;
+  background: linear-gradient(135deg, #FFEBD3 0%, #f5f0ed 100%);
+}
+
+.create-listing-card:focus-visible {
+  outline: 3px solid #4b3832;
+  outline-offset: 3px;
+}
+
+.create-listing-card__icon-section {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(75, 56, 50, 0.05);
+  flex-shrink: 0;
+}
+
+.create-listing-card__icon {
+  font-size: 4rem;
+  color: var(--color-primary);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.create-listing-card:hover .create-listing-card__icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.create-listing-card__info {
+  padding: 1rem 1.5rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.create-listing-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: #4b3832;
+  font-family: 'Playfair Display', serif;
+}
+
+.create-listing-card__description {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.create-listing-card__call-to-action {
+  display: inline-block;
+  margin-top: auto;
+  padding: 0.5rem 1.5rem;
+  background-color: #4b3832;
+  color: var(--color-white);
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.create-listing-card:hover .create-listing-card__call-to-action {
+  background-color: #5a4139;
+}
+
+.create-listing-card--carousel {
+  color: inherit;
+  text-decoration: none;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border: 2px dashed #4b3832;
+  background: linear-gradient(135deg, #f5f0ed 0%, #faf8f6 100%);
+}
+
+.create-listing-card--carousel:hover {
+  border-style: solid;
+  background: linear-gradient(135deg, #faf8f6 0%, #f5f0ed 100%);
+}
+
+@media (max-width: 480px) {
+  .create-listing-card--grid {
+    width: 100%;
+    max-width: 270px;
+    height: 400px;
+    margin: 0 auto;
+  }
+
+  .create-listing-card--grid:hover { transform: none; }
+}

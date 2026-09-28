@@ -1,0 +1,67 @@
+.user-menu__avatar {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  display: block;
+  border-radius: 50%;
+}
+
+.user-menu__avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-menu__avatar:focus-visible {
+  outline: 3px solid #4b3832;
+  outline-offset: 3px;
+}
+
+.user-menu__avatar-image,
+.user-menu__avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #4b3832;
+}
+
+.user-menu__avatar-image {
+  object-fit: cover;
+}
+
+.user-menu__avatar-placeholder {
+  background-color: #4b3832;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.user-menu__notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #d32f2f;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px;
+  border: 2px solid #FFEBD3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .user-menu__avatar {
+    width: 36px;
+    height: 36px;
+  }
+}

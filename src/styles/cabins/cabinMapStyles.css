@@ -1,0 +1,46 @@
+.cabin-map {
+  margin-top: 3rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.cabin-map .leaflet-control-attribution a { color: #4b3832; }
+
+.cabin-map__single {
+  height: 300px;
+  width: 100%;
+}
+
+.cabin-map__multiple {
+  height: 400px;
+  width: 100%;
+}
+
+.cabin-map__google-maps-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #fff;
+  border: 2px solid #4b3832;
+  color: #4b3832;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cabin-map__google-maps-button:hover:not(:disabled) {
+  background-color: #4b3832;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cabin-map__popup { color: #4b3832; }
+.cabin-map__popup-title { font-weight: 600; }
+.cabin-map__popup-price { font-size: 0.875rem; }
+.cabin-map__empty { color: #666; }

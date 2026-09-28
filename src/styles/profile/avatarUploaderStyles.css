@@ -1,0 +1,27 @@
+.avatar-uploader__button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  background-color: #596c79;
+  color: white;
+  border: 2px solid #4b3832;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.avatar-uploader__button:hover {
+  background-color: #5d7171;
+  transform: translateY(-1px);
+}
+
+.avatar-uploader__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.avatar-uploader__input,
+.avatar-uploader__file-input {
+  display: none;
+}

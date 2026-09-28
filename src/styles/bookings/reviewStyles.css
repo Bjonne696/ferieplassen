@@ -1,0 +1,122 @@
+.add-review-form {
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  margin-top: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.add-review-form__label {
+  display: block;
+  color: #4a2f1b;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.add-review-form__rating {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.add-review-form__star-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.add-review-form__rating-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.add-review-form__rating-input:focus-visible + .add-review-form__star {
+  outline: 3px solid #4b3832;
+  outline-offset: 3px;
+  border-radius: 0.15rem;
+}
+
+.add-review-form__star {
+  display: inline-block;
+  color: #6b7280;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.add-review-form__star.active,
+.add-review-form__star-option:hover .add-review-form__star {
+  color: #8a4b08;
+}
+
+.add-review-form__star.selected {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid #4b3832;
+  outline-offset: 2px;
+  border-radius: 0.15rem;
+  transform: scale(1.12);
+}
+
+.add-review-form__comment {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.add-review-form__comment:focus {
+  outline: none;
+  border-color: #758592;
+}
+
+.add-review-form__comment::placeholder {
+  color: #999;
+}
+
+.add-review-form__submit {
+  background-color: #4b3832;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.add-review-form__submit:hover {
+  background-color: #3a2314;
+  transform: translateY(-1px);
+}
+
+.add-review-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.add-review-form__error {
+  color: #b71c1c;
+  font-size: 0.875rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+  background-color: rgba(211, 47, 47, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  border-radius: 0.25rem;
+}

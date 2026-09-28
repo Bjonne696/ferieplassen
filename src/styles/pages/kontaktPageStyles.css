@@ -1,0 +1,33 @@
+.contact-page__intro {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #666;
+  overflow-wrap: anywhere;
+}
+
+.contact-page__methods {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.contact-page__methods h3 {
+  color: #4b3832;
+  margin-bottom: 1rem;
+}
+
+.contact-page__methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1rem;
+}
+
+.contact-page__methods-grid > * {
+  min-width: 0;
+}
+
+.contact-page__email-link {
+  color: #4b3832;
+  overflow-wrap: anywhere;
+}

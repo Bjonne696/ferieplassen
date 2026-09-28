@@ -1,0 +1,1 @@
+export const facilityOptions = ["Kjøkken", "Peis", "Badstue", "Parkering", "Kjæledyr tillatt", "WiFi"];
