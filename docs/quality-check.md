@@ -1,6 +1,6 @@
 # Kvalitetskontroll
 
-Denne siden beskriver kommandoer, forventet frontend-oppførsel og kontrollenes avgrensninger. `docs/quality-check.md` finnes i det aktive Replit-prosjektet og skal beholdes i prosjekt-/kodeeksporten.
+Denne siden beskriver kommandoer, forventet frontend-oppførsel og kontrollenes avgrensninger.
 
 ## Verktøy og kommandoer
 
@@ -21,7 +21,7 @@ npx playwright install chromium
 
 ## Isolerte nettleserkontroller
 
-Nettlesertestene i `tests/browser-refactor.mjs` kjøres separat fra `npm test`. Start Vite-serveren først (standard `http://localhost:5000`). `BROWSER_TEST_URL` kan angi full adresse, eller `REPLIT_DEV_DOMAIN` et domene. `VITE_SUPABASE_URL` må finnes i testprosessen for at harnessen skal kunne isolere Supabase-trafikken. Velg én gruppe og én bredde per kjøring; gyldige bredder er 320, 768 og 1280 CSS-piksler. På Linux kan hver kommando avgrenses til 60 sekunder med `timeout`:
+Nettlesertestene i `tests/browser-refactor.mjs` kjøres separat fra `npm test`. Start Vite-serveren først (standard `http://localhost:5000`). `BROWSER_TEST_URL` kan angi en full URL, for eksempel `http://localhost:5000`. `VITE_SUPABASE_URL` må finnes i testprosessen for at harnessen skal kunne isolere Supabase-trafikken. Velg én gruppe og én bredde per kjøring; gyldige bredder er 320, 768 og 1280 CSS-piksler. På Linux kan hver kommando avgrenses til 60 sekunder med `timeout`:
 
 ```sh
 timeout 60s node tests/browser-refactor.mjs identity 320
@@ -38,7 +38,7 @@ Tilgjengelige grupper:
 - `keyboard`, `axe`: tastaturkontroll og axe-skanning. Vurderingsskjemaet inngår; radiovalg, synlig fokus, valgt tilstand uten bare farge, kontrast og tilknytning av valideringsfeil undersøkes. Axe kjøres i normal- og feiltilstand.
 - `booking`, `demo`: isolerte booking- og demoflyter.
 
-På Replit kan Playwrights nedlastede Chromium mangle systembiblioteker. Hvis miljøet krever systemnettleseren, kan den angis slik:
+Playwrights nedlastede Chromium krever nødvendige systembiblioteker. Hvis miljøet krever systemnettleseren, kan den angis slik:
 
 ```sh
 PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH="$(command -v chromium)" \
@@ -50,15 +50,14 @@ Harnessen bruker syntetiske fixtures og mocker Supabase-svar. Den blokkerer ekst
 
 ## Resultater fra denne frontend-kontrollen
 
-Kontrollert i det aktive Replit-prosjektet med Node `v20.20.0` etter migreringen fra styled-components til vanlige CSS-filer:
+Kontrollert med Node `v20.20.0` etter migreringen fra styled-components til vanlige CSS-filer:
 
 - `npm test`: 30 av 30 tester bestått. `npm run lint -- --max-warnings=0`: bestått uten advarsler. `npm run build`: bestått; Vite varsler om en eksisterende JavaScript-fil over 500 kB etter minifisering.
 - Isolerte `identity`, `keyboard` og `axe`: bestått ved 320, 768 og 1280 CSS-piksler. `identity` dekker både bytte via ut-/innlogging og A→B mens samme `ProfileData`-instans er montert; alle tilbakeholdte A-svar behandles før siste kontroll av B. `refresh` er bestått ved 1280 CSS-piksler etter skjemautfylling og ny tokenfornyelse.
 - `routes` og `listings`: bestått ved 320, 768 og 1280 CSS-piksler. `registration`, `auth`, `booking`, `demo` og `cabin`: bestått ved 1280 CSS-piksler; `auth` og `booking` også ved 320. I `listings` kontrolleres de eksakte DOM-klassetokens for navigasjon, profil, hyttekort, vurderingsskjema, bookingdialog og cookie-banner: bare lesbare appklasser, ingen duplikater eller genererte hash-klasser. Tilstandsklasser kontrolleres fortsatt. Testene bruker tilgjengelige roller og navn som primærselektorer.
-- `listings 1280` bestod også mot det bygde produksjonsresultatet på en midlertidig port 5001, uten å endre prosjektets arbeidsflyter. `Preview Build` kan ikke starte samtidig med utviklingsserveren fordi begge forsøker port 5000. Hver nettleserkjøring var avgrenset til 60 sekunder og brukte syntetiske nettverkssvar.
+- `listings 1280` bestod også mot det bygde produksjonsresultatet på en midlertidig port 5001, uten å endre prosjektets arbeidsflyter. Hver nettleserkjøring var avgrenset til 60 sekunder og brukte syntetiske nettverkssvar.
 - Etter rettingen av opprett-kortets CSS-kaskade bestod `carousel` ved 320, 768 og 1280 CSS-piksler både i utviklingsversjonen og produksjonsbygget. Med bare opprett-kortet og med fire syntetiske premiumhytter ble `position` og transformasjonsmatrise kontrollert i hoved- og sideposisjoner, både normalt og ved hover. Hovedkortets tastaturfokus og rutenettkortets plassering, hover og fokus ble også kontrollert. `registration`, `identity` og `refresh` ved 1280, samt `listings` ved 320 i utvikling og 1280 i produksjonsbygget, bestod fortsatt. Ingen testkall gikk til ekte tjenester.
 - Syntetiske før-/etterbilder av forside, utleieoversikt, profil og bookingdialog ved 320 og 1280 CSS-piksler er gjennomgått. Hovedlayout, kort, navigasjon, dialog og datovelger er beholdt. Profilens mockede avatar kan se forskjellig ut mellom bilder tatt før og etter asynkront profiloppslag: mockserveren returnerer ikke bildepiksler for den syntetiske avatar-URL-en. Dette er en testfixture-begrensning, ikke en endring i avatarens fallback-kode.
-- Ingen faktiske Supabase-kontoer, databaseendringer, betalinger eller meldinger ble brukt som test. Nettleserkjøringene benyttet systeminstallert Chromium i Replit-miljøet fordi Playwrights nedlastede utgave kan mangle systembiblioteker her.
 
 ## Oppførsel som skal bevares
 

@@ -33,11 +33,7 @@ dist-ssr
 .env.local
 .env.*.local
 
-# Replit
-.replit
-replit.md
+# Local tooling and cache
 .cache/
 .config/
 .local/
-.upm/
-attached_assets/

@@ -1,7 +1,5 @@
 # Tilgang til administrasjon
 
-Eier avklarte 2026-09-24: bare innloggede administratorer skal ha tilgang til admin-siden og administratorhandlinger.
-
 ## Frontend
 
 `src/App.jsx` beskytter `/admin`: sesjon må finnes, profil-ID må tilhøre brukeren og rollen må være `admin`. Under lasting vises bare en statusmelding; øvrige brukere sendes til startsiden. AdminData monteres ikke før tilgang er avklart. `/kontakt` beholder sin eksisterende administratorbegrensning.
@@ -37,5 +35,3 @@ Ingen generisk policy-migrasjon er lagt inn: uten eksisterende policies og skjem
 `timeout 55s node tests/browser-refactor.mjs auth 320` (og `1280`) bruker isolerte, syntetiske Supabase-svar. Eksterne HTTP-kall og WebSockets avskjæres; ingen admin-mutasjoner sendes. Kontrollen dekker gjest, vanlig bruker, manglende rolle/profil, feil profilidentitet, avvist profiloppslag, ventende rolleoppslag, administrator og utlogging. Den kontrollerer at avviste tilstander ikke henter admin-data.
 
 Historisk resultat fra 2026-09-24 (ikke verifikasjon av gjeldende endringer): auth-gruppen bestod ved 320 og 1280 px, alle 13 Node-tester bestod, og lint/build bestod (build varslet fortsatt om stor bundle). Skjermbilde av `/admin` som gjest viste startsiden etter videresending, uten nettleserfeil. Supabase-policyer og funksjonsdefinisjoner er fortsatt ikke tilgjengelige for kontroll.
-
-Supabase-tilkoblingen ble foreslått, men dialogen ble lukket uten tilkobling. Backend-verifikasjon og eventuelle backend-endringer er derfor utsatt; leveransen bekrefter kun tilgangsregelen og frontend-beskyttelsen.

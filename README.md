@@ -61,7 +61,7 @@ npm run lint -- --max-warnings=0
 npm run build
 ```
 
-`tests/browser-refactor.mjs` inneholder separate Playwright-kontroller med mockede Supabase-svar. Utviklingsserveren må allerede kjøre (standardadresse `http://localhost:5000`); angi eventuelt `BROWSER_TEST_URL` eller `REPLIT_DEV_DOMAIN` for en annen adresse. `VITE_SUPABASE_URL` må være satt i testprosessen for at testharnessen skal kunne isolere Supabase-trafikken. Playwright og Chromium installeres som beskrevet over; `axe`-gruppen bruker prosjektets axe-core-avhengighet.
+`tests/browser-refactor.mjs` inneholder separate Playwright-kontroller med mockede Supabase-svar. Utviklingsserveren må allerede kjøre (standardadresse `http://localhost:5000`); angi eventuelt `BROWSER_TEST_URL` for en annen adresse. `VITE_SUPABASE_URL` må være satt i testprosessen for at testharnessen skal kunne isolere Supabase-trafikken. Playwright og Chromium installeres som beskrevet over; `axe`-gruppen bruker prosjektets axe-core-avhengighet.
 
 Kjør én avgrenset gruppe og én skjermbredde per kommando. På Linux avgrenser `timeout` kjøringen til 60 sekunder:
 
@@ -74,5 +74,3 @@ Gruppene er `routes`, `listings`, `registration`, `booking`, `demo`, `auth`, `ke
 Profilvisningen er knyttet til innlogget brukeridentitet: profil og avatar, tidligere og kommende opphold, egne og innkommende vurderinger, egne annonser/abonnement og innkommende forespørsler skal ikke blandes mellom brukere. Identitetsbytte og utlogging ugyldiggjør foreldede svar. Fornyelse av sesjonen for samme bruker skal bevare profilvisningen og skjemaer uten sideomlasting. Vurderingsstjernene har synlig valgt tilstand utover farge, grafisk kontrast og tilgjengelig tilknyttet valideringsfeil.
 
 Tilgjengelighet vurderes med WCAG 2.2 A/AA som prosjektmål og med hensyn til [norske krav hos Uu-tilsynet](https://www.uutilsynet.no/regelverk/kva-seier-forskrifta/153). Dette er ikke en erklæring om juridisk samsvar eller om at løsningen oppfyller WCAG 2.2 AA.
-
-`docs/quality-check.md` finnes i det aktive Replit-prosjektet og skal beholdes i prosjekt-/kodeeksporten.

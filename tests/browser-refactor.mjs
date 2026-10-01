@@ -5,10 +5,9 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { createRequire } from 'node:module';
 
-const domain = process.env.REPLIT_DEV_DOMAIN;
-const base = new URL(process.env.BROWSER_TEST_URL || (domain
-  ? (domain.startsWith('http') ? domain : `https://${domain}`)
-  : 'http://localhost:5000'));
+const base = new URL(
+  process.env.BROWSER_TEST_URL || 'http://localhost:5000'
+);
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 assert(supabaseUrl, 'VITE_SUPABASE_URL is required to isolate Supabase traffic');
 const supabase = new URL(supabaseUrl);
