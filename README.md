@@ -113,8 +113,6 @@ Availability filtering reads approved entries from `bookings`, while the booking
 - [Quality checks](docs/quality-check.md) — commands, browser scenarios and verification scope.
 - [Administrator access](docs/admin-access.md) — frontend access checks and backend authorization requirements.
 
-These two documents are currently written in Norwegian.
-
 ## Author
 
 [Bjørn - Tore M. Jaavall](https://github.com/bjonne696)
