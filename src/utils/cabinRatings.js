@@ -11,7 +11,7 @@ export function enrichCabinRatings(cabins, reviews, ratingField = "average_score
       : 0;
     return {
       ...cabin,
-      [ratingField]: Math.min(average + (cabin.is_premium ? 1.5 : 0), 5),
+      [ratingField]: Math.min(average, 5),
     };
   });
 }

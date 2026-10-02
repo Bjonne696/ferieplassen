@@ -80,7 +80,7 @@ export default function useCabinDetails(id, userId) {
 
           if (active && !reviewsError && reviews?.length) {
             const avg = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
-            setAverageRating(Math.min(avg + (data.is_premium ? 1.5 : 0), 5));
+            setAverageRating(Math.min(avg, 5));
           }
         } catch (reviewsError) {
           console.error("Reviews fetch error:", reviewsError);

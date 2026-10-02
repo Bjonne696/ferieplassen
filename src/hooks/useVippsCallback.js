@@ -110,7 +110,7 @@ export default function useVippsCallback() {
             .order('created_at', { ascending: false })
             .limit(1);
           if (!active) return;
-          if (data && data.length > 0 && data[0].status !== 'pending') {
+          if (data && data.length > 0 && data[0].status === 'active') {
             clearInterval(intervalRef.current);
             navigate('/min-profil', { replace: true, state: { vippsCallback: 'success' } });
             return;

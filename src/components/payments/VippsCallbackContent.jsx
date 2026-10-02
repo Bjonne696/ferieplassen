@@ -57,7 +57,7 @@ export default function VippsCallbackContent({ phase, demoError, isDemoBanner, n
             Vi kunne ikke bekrefte abonnementet innen forventet tid. Dette er normalt – Vipps kan bruke litt ekstra tid.
             Gå til profilen din for å se oppdatert status.
           </p>
-          <button className="vipps-callback__manual-button vipps-callback__button" type="button" onClick={() => navigate('/min-profil', { replace: true, state: { vippsCallback: 'success' } })}>
+          <button className="vipps-callback__manual-button vipps-callback__button" type="button" onClick={() => navigate('/min-profil', { replace: true })}>
             Gå til Min profil
           </button>
         </>

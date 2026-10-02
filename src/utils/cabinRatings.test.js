@@ -7,13 +7,13 @@ const cabins = [
   { id: 2, title: "Skog", location: "Oslo", price_per_night: 900, facilities: ["Peis"], is_premium: true },
 ];
 
-test("ratings preserve premium boost, missing reviews and cap", () => {
+test("ratings show guest averages without a premium bonus", () => {
   const result = enrichCabinRatings(cabins, [
     { cabin_id: 1, rating: 4 }, { cabin_id: 1, rating: 2 },
-    { cabin_id: 2, rating: 5 },
+    { cabin_id: 2, rating: 3 },
   ]);
-  assert.deepEqual(result.map((cabin) => cabin.average_score), [3, 5]);
-  assert.equal(enrichCabinRatings(cabins, [], "avgRating")[1].avgRating, 1.5);
+  assert.deepEqual(result.map((cabin) => cabin.average_score), [3, 3]);
+  assert.equal(enrichCabinRatings(cabins, [], "avgRating")[1].avgRating, 0);
   assert.equal(enrichCabinRatings(cabins, [], "avgRating")[0].avgRating, 0);
 });
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 import supabase from "../lib/supabaseClient";
 
 export default function useBookingRequest(cabinId) {
@@ -84,8 +84,8 @@ export default function useBookingRequest(cabinId) {
       setError("Valgte datoer overlapper med en eksisterende booking. Vennligst velg andre datoer.");
       return;
     }
-    const start = startDate.toISOString().split("T")[0];
-    const end = endDate.toISOString().split("T")[0];
+    const start = format(startDate, "yyyy-MM-dd");
+    const end = format(endDate, "yyyy-MM-dd");
     const { data: existingPending, error: pendingError } = await supabase
       .from("booking_requests")
       .select("id")
