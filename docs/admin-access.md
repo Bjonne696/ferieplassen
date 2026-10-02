@@ -1,37 +1,67 @@
-# Tilgang til administrasjon
+# Administrator access
 
-## Frontend
+This document describes the frontend access rules and the authorization requirements for the external Supabase backend. See the [README](../README.md) for setup and [Quality checks](quality-check.md) for the test workflow.
 
-`src/App.jsx` beskytter `/admin`: sesjon må finnes, profil-ID må tilhøre brukeren og rollen må være `admin`. Under lasting vises bare en statusmelding; øvrige brukere sendes til startsiden. AdminData monteres ikke før tilgang er avklart. `/kontakt` beholder sin eksisterende administratorbegrensning.
+## Frontend route protection
 
-`AuthProvider` skiller mellom samme bruker og en reell identitetsendring. `SIGNED_IN` eller `TOKEN_REFRESHED` for samme bruker-ID beholder profil- og UI-/skjematilstand; det nullstiller ikke profilen eller remonterer beskyttede skjemaer. Ved faktisk bytte til en annen bruker eller utlogging ugyldiggjøres gammel identitet og dens ventende profiloppslag, og brukeravhengig data skal ikke beholdes eller vises for neste identitet. Foreldede svar ignoreres. Manglende profil eller feil i profiloppslaget gir ikke tilgang.
+[AdminRoute in src/App.jsx](../src/App.jsx) protects both `/admin` and `/kontakt`.
 
-Dette er kun brukergrensesnittbeskyttelse. En angriper kan omgå React og kalle Supabase direkte.
+| State | Expected behavior |
+| --- | --- |
+| Authentication or profile lookup is loading | Show a status message and wait before mounting the protected page. |
+| No signed-in user | Redirect to the home page. |
+| Missing profile or profile ID does not match the user ID | Redirect to the home page. |
+| Profile role is not `admin` | Redirect to the home page. |
+| Signed-in user has a matching profile with `role === 'admin'` | Mount the protected page. |
 
-## Backend og RLS: utenfor frontend-oppgaven, ikke verifisert
+The administrator components mount only after the route guard permits access. These checks control what the interface displays. Supabase must enforce authorization for direct database and function requests as well.
 
-Backend-/RLS-inspeksjon, Supabase-konfigurasjon og backend-endringer er utenfor denne frontend-oppgaven. Repoet inneholder ingen SQL-migrasjoner, RLS-policyer eller definisjon av `delete_user_account`. README beskriver en eksternt konfigurert Supabase-backend. Ekte mutasjoner og persondata er ikke brukt. Frontend-mocks beviser ikke at produksjonens tilgangsregler er riktige; følgende punkter er kun fremtidige backend-verifikasjonsbehov, og ikke akseptansekriterier for denne frontend-oppgaven.
+## Session and profile behavior
 
-Følgende må inspiseres i riktig Supabase-prosjekt før backend kan godkjennes:
+[AuthProvider](../src/contexts/AuthProvider.jsx) distinguishes session refreshes from changes of user identity:
 
-- `profiles`: aktiv RLS, grants og alle SELECT/INSERT/UPDATE/DELETE-policyer. Vanlige brukeres legitime egenprofiltilgang må bevares, men ikke gi generell tilgang til andre brukeres e-post eller administrativ sletting.
-- `profiles.role`: registrering eller profilredigering må ikke kunne tildele eller endre egen administratorrolle. En klientstyrt verdi eller user_metadata er ikke autoritativ.
-- `discount_codes`: generell administrativ listing og INSERT/UPDATE/DELETE kun for administratorer. Eksisterende rabattvalidering i `src/services/subscriptionService.js` må få en avgrenset og trygg kontrakt, ikke offentlig tilgang til administrasjonsdata.
-- `delete_user_account(uid)`: inspiser alle overloads, EXECUTE-grants, funksjonsdefinisjon, SECURITY DEFINER og search_path. Den må kontrollere den autentiserte innkalleren på serveren, ikke stole på målbrukerens ID eller en klientpåstand om rolle.
-- Kontroller også relevante triggere, views og Edge Functions som kan omgå eller endre rollene.
+- `SIGNED_IN` or `TOKEN_REFRESHED` for the same user preserves profile state and open forms.
+- Switching users or signing out invalidates pending profile requests from the previous identity.
+- Outdated responses cannot replace the active user's profile.
+- A missing profile or failed profile lookup does not grant administrator access.
 
-## Trygg verifikasjon av backend
+[Profile creation](../src/utils/ensureSignupProfile.js) assigns the default role `bruker` to a new profile. If a profile already exists, the helper returns it without overwriting its role or fields. The backend must independently prevent users from assigning themselves an administrator role.
 
-1. Start med read-only inspeksjon av skjema, grants, policyer og funksjonsdefinisjoner, uten å hente brukerdata.
-2. Test de faktiske policyene/funksjonene i en isolert database med syntetiske gjeste-, bruker- og administratorkontekster. Bruk reell auth-kontekst/JWT-kontrakt, ikke service-role som om den var sluttbruker.
-3. Bekreft avvisning av profiloversikt, sletting av andre brukere, rabattadministrasjon og direkte RPC for gjest/vanlig bruker; bekreft administratorens tillatte operasjoner.
-4. Prøv egenoppgradering av rolle ved både INSERT og UPDATE; begge må avvises. Verifiser legitime egenprofilhandlinger fortsatt fungerer.
-5. Ikke kall slette-RPC eller andre mutasjoner i produksjon, selv med «ugyldig» ID. Rollback alene er ikke tilstrekkelig dersom triggere eller funksjoner har eksterne sideeffekter.
+## Administrative operations
 
-Ingen generisk policy-migrasjon er lagt inn: uten eksisterende policies og skjema kan en slik migrasjon enten bryte egenprofil/rabattflyten eller la en eksisterende permissiv policy fortsatt åpne tilgang.
+| Client operation | Backend resource |
+| --- | --- |
+| Display user names, email addresses and regions | `profiles` queries in [AdminData](../src/components/admin/AdminData.jsx) |
+| Delete a profile | `profiles` deletion in `AdminData` |
+| Delete the authentication account after profile deletion | `delete_user_account(uid)` RPC |
+| List, create, update and delete discount codes | `discount_codes` operations in [DiscountCodeManager](../src/components/admin/DiscountCodeManager.jsx) |
 
-## Automatisert frontend-kontroll
+Profile deletion and authentication-account deletion are separate requests in the current client. A successful profile deletion does not establish that the authentication account was also deleted.
 
-`timeout 55s node tests/browser-refactor.mjs auth 320` (og `1280`) bruker isolerte, syntetiske Supabase-svar. Eksterne HTTP-kall og WebSockets avskjæres; ingen admin-mutasjoner sendes. Kontrollen dekker gjest, vanlig bruker, manglende rolle/profil, feil profilidentitet, avvist profiloppslag, ventende rolleoppslag, administrator og utlogging. Den kontrollerer at avviste tilstander ikke henter admin-data.
+## Backend authorization requirements
 
-Historisk resultat fra 2026-09-24 (ikke verifikasjon av gjeldende endringer): auth-gruppen bestod ved 320 og 1280 px, alle 13 Node-tester bestod, og lint/build bestod (build varslet fortsatt om stor bundle). Skjermbilde av `/admin` som gjest viste startsiden etter videresending, uten nettleserfeil. Supabase-policyer og funksjonsdefinisjoner er fortsatt ikke tilgjengelige for kontroll.
+SQL migrations, Row Level Security policies and the implementation of `delete_user_account` are not included in this repository. The following requirements describe what must be checked in the configured Supabase project; they are not a claim that its current policies have been verified.
+
+| Resource | Required checks |
+| --- | --- |
+| `profiles` | Inspect RLS, grants and all read/write policies. Preserve legitimate access to a user's own profile while restricting administrative listing, email access and deletion. |
+| `profiles.role` | Prevent self-assignment or promotion to `admin` through inserts, updates or user-controlled metadata. |
+| `discount_codes` | Restrict administrative listing and modification to administrators. Give the client-side discount validation flow only the access it needs. |
+| `delete_user_account(uid)` | Check every overload, execution grants, caller authorization and any `SECURITY DEFINER` or `search_path` configuration. The function must authorize the caller independently of the supplied target ID. |
+| Related views, triggers and Edge Functions | Check whether they bypass policies or allow profile roles and protected data to be changed indirectly. |
+
+Use a separate test environment with synthetic users when validating these rules. Inspect the schema and policies first, then test direct requests as a guest, a regular user and an administrator. Verify both rejection of unauthorized operations and permitted operations on the user's own profile. Test role changes through both profile insertion and update. Administrative deletion tests belong in that isolated environment.
+
+## Frontend verification
+
+After installing dependencies and configuring `.env.local`, start the local development server in one terminal. In a second terminal, run from the project root:
+
+```sh
+npx playwright install chromium
+node --env-file=.env.local tests/browser-refactor.mjs auth 320
+node --env-file=.env.local tests/browser-refactor.mjs auth 1280
+```
+
+The current `auth` group checks guest redirects from `/admin` and `/kontakt`, mocked sign-in and handling of delayed profile responses after logout. It uses synthetic Supabase responses and intercepts external requests.
+
+The full role and profile matrix above is an additional verification requirement: the current `auth` group does not exercise every row as a separate scenario. A passing frontend check also does not establish that database policies or the deletion RPC authorize real requests correctly.

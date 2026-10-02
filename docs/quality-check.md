@@ -1,10 +1,8 @@
-# Kvalitetskontroll
+# Quality checks
 
-Denne siden beskriver kommandoer, forventet frontend-oppførsel og kontrollenes avgrensninger.
+This document describes the available checks, the behavior they protect and the remaining verification scope. Run commands from the project root using Node.js 22 or newer and npm, as described in the [README](../README.md).
 
-## Verktøy og kommandoer
-
-Bruk Node.js `>=20.11.0 <21` eller `>=22` og npm. `npm test` kjører Node med `--test-timeout`, et flagg som ble innført i Node 20.11.0. I låsefilen er Vite `6.3.5`, med engine-krav `^18.0.0 || ^20.0.0 || >=22.0.0`, og Playwright `1.63.0`, med engine-krav `>=20`. Samlet prosjektkrav er dermed Node 20.11.0 eller nyere i 20-serien, eller 22 og nyere; Node 21 faller utenfor Vites intervall. Node-versjonen i arbeidsmiljøet ved denne dokumentasjonsoppdateringen er `v20.20.0`. `package.json` har ikke eget `engines`-felt.
+## Baseline checks
 
 ```sh
 npm ci
@@ -13,67 +11,106 @@ npm run lint -- --max-warnings=0
 npm run build
 ```
 
-`npm test` kjører `node:test`-pakken i `tests/*.test.mjs` og `src/utils/*.test.js` uten watch-modus. `npm run lint -- --max-warnings=0` kontrollerer `src`, `tests`, `vite.config.js` og `eslint.config.js`, og feiler også ved ESLint-advarsler. `npm run build` lager produksjonsbygget. Installer Playwrights Chromium én gang per miljø:
+| Command | What it checks |
+| --- | --- |
+| `npm test` | Runs the Node.js tests in `tests/*.test.mjs` and `src/utils/*.test.js` without watch mode or a live Supabase connection. |
+| `npm run lint -- --max-warnings=0` | Checks `src`, `tests`, `vite.config.js` and `eslint.config.js`; warnings also fail the command. |
+| `npm run build` | Creates the production bundle in `dist/`. A successful build does not establish that external services are correctly configured. |
+
+The Node.js tests cover authentication and identity transitions, profile creation, stale availability requests, rating and filtering rules, listing creation order, demo activation and source structure.
+
+## Browser checks
+
+The Playwright harness in [tests/browser-refactor.mjs](../tests/browser-refactor.mjs) runs separately from `npm test`.
+
+Configure `.env.local` as described in the README. Start the application in one terminal:
+
+```sh
+npm run dev
+```
+
+In a second terminal, install Chromium and run one group at one viewport width:
 
 ```sh
 npx playwright install chromium
+node --env-file=.env.local tests/browser-refactor.mjs identity 320
 ```
 
-## Isolerte nettleserkontroller
+`--env-file=.env.local` supplies the test process with the Supabase URL used by the app. The harness needs that URL to intercept requests. Supported widths are **320, 768 and 1280 CSS pixels**. It defaults to 1280 when no width is supplied.
 
-Nettlesertestene i `tests/browser-refactor.mjs` kjøres separat fra `npm test`. Start Vite-serveren først (standard `http://localhost:5000`). `BROWSER_TEST_URL` kan angi en full URL, for eksempel `http://localhost:5000`. `VITE_SUPABASE_URL` må finnes i testprosessen for at harnessen skal kunne isolere Supabase-trafikken. Velg én gruppe og én bredde per kjøring; gyldige bredder er 320, 768 og 1280 CSS-piksler. På Linux kan hver kommando avgrenses til 60 sekunder med `timeout`:
+| Group | Implemented checks |
+| --- | --- |
+| `routes` | Page rendering, route navigation, reflow and map layout. |
+| `listings` | Listing views, filters, empty states and selected DOM class conventions. |
+| `carousel` | Create-listing card and carousel positioning in normal, hover and focus states. |
+| `registration` | Registration, profile creation and recovery from selected failures. |
+| `booking` | Date-picker rendering and a booking request with mocked responses. |
+| `demo` | Simulated payment confirmation and intercepted demo activation. |
+| `auth` | Guest restrictions, mocked sign-in and delayed profile responses after logout. |
+| `identity` | Outdated profile data after a user switch, including a switch while the page stays mounted. |
+| `refresh` | Preservation of the current page and form input during same-user session refresh. |
+| `keyboard` | Keyboard interaction, focus, review selection and associated validation errors. |
+| `axe` | Automated accessibility scans of selected normal and error states. |
+| `cabin` | Missing-property and failed-lookup states, including checks that loading indicators are cleared. |
+
+Each run includes a 55-second watchdog. On Linux or WSL, an additional outer limit can be used:
 
 ```sh
-timeout 60s node tests/browser-refactor.mjs identity 320
+timeout 60s node --env-file=.env.local tests/browser-refactor.mjs identity 320
 ```
 
-Dette er en avgrenset nettlesertestkommando, ikke en del av `npm test`. Den generelle, ikke-watch-baserte kontrollen består av `npm test`, `npm run lint -- --max-warnings=0` og `npm run build`; bruk `npm ci` først etter behov for å installere låste avhengigheter.
+### Browser and server configuration
 
-Tilgjengelige grupper:
+| Variable | Purpose |
+| --- | --- |
+| `VITE_SUPABASE_URL` | Must match the URL configured for the app so Supabase requests can be mocked. |
+| `BROWSER_TEST_URL` | Full application URL. Defaults to `http://localhost:5000`. |
+| `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` | Optional absolute path to an installed Chromium executable. |
 
-- `routes`, `listings`, `cabin`: rutefremvisning, annonse-/hyttevisninger og responsiv visning.
-- `registration`, `auth`: registrering, profilopprettelse/feil og innloggingsflyter.
-- `identity`: forsinkede svar for bruker A etter bytte til B i samme app, inkludert profil/avatar, tidligere opphold, egne vurderinger og innkommende vurderinger; kontrollerer også at utlogging ugyldiggjør ventende data.
-- `refresh`: fornyelse av token for samme bruker etter at skjemaet er fylt ut; innhold og pågående skjema skal bevares uten remontering eller omlasting.
-- `keyboard`, `axe`: tastaturkontroll og axe-skanning. Vurderingsskjemaet inngår; radiovalg, synlig fokus, valgt tilstand uten bare farge, kontrast og tilknytning av valideringsfeil undersøkes. Axe kjøres i normal- og feiltilstand.
-- `booking`, `demo`: isolerte booking- og demoflyter.
-
-Playwrights nedlastede Chromium krever nødvendige systembiblioteker. Hvis miljøet krever systemnettleseren, kan den angis slik:
+Playwright's downloaded Chromium requires the appropriate system libraries. If the environment uses a system Chromium installation, specify its actual path. For example, on Linux or WSL:
 
 ```sh
-PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH="$(command -v chromium)" \
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium \
 BROWSER_TEST_URL=http://127.0.0.1:5000 \
-timeout 60s node tests/browser-refactor.mjs identity 320
+timeout 60s node --env-file=.env.local tests/browser-refactor.mjs identity 320
 ```
 
-Harnessen bruker syntetiske fixtures og mocker Supabase-svar. Den blokkerer eksterne forespørsler, WebSocket-tilkoblinger og skrivinger til appens eget domene; utestede Edge Functions avvises. Nettleserkontrollene utfører derfor ikke ekte registrering, booking, meldingsutsending, betaling eller databaseendringer.
+Replace `/usr/bin/chromium` if the executable is installed elsewhere. To check the production build, run `npm run build` and `npm run preview` instead of the development server. Development and preview both use port 5000, so run only one at a time.
 
-## Resultater fra denne frontend-kontrollen
+### Network isolation
 
-Kontrollert med Node `v20.20.0` etter migreringen fra styled-components til vanlige CSS-filer:
+The harness uses synthetic users, listings and responses. It mocks supported Supabase requests, rejects unhandled operations, blocks other external HTTP requests and WebSockets, and blocks writes to the app's own origin. Local page and asset reads are allowed.
 
-- `npm test`: 30 av 30 tester bestått. `npm run lint -- --max-warnings=0`: bestått uten advarsler. `npm run build`: bestått; Vite varsler om en eksisterende JavaScript-fil over 500 kB etter minifisering.
-- Isolerte `identity`, `keyboard` og `axe`: bestått ved 320, 768 og 1280 CSS-piksler. `identity` dekker både bytte via ut-/innlogging og A→B mens samme `ProfileData`-instans er montert; alle tilbakeholdte A-svar behandles før siste kontroll av B. `refresh` er bestått ved 1280 CSS-piksler etter skjemautfylling og ny tokenfornyelse.
-- `routes` og `listings`: bestått ved 320, 768 og 1280 CSS-piksler. `registration`, `auth`, `booking`, `demo` og `cabin`: bestått ved 1280 CSS-piksler; `auth` og `booking` også ved 320. I `listings` kontrolleres de eksakte DOM-klassetokens for navigasjon, profil, hyttekort, vurderingsskjema, bookingdialog og cookie-banner: bare lesbare appklasser, ingen duplikater eller genererte hash-klasser. Tilstandsklasser kontrolleres fortsatt. Testene bruker tilgjengelige roller og navn som primærselektorer.
-- `listings 1280` bestod også mot det bygde produksjonsresultatet på en midlertidig port 5001, uten å endre prosjektets arbeidsflyter. Hver nettleserkjøring var avgrenset til 60 sekunder og brukte syntetiske nettverkssvar.
-- Etter rettingen av opprett-kortets CSS-kaskade bestod `carousel` ved 320, 768 og 1280 CSS-piksler både i utviklingsversjonen og produksjonsbygget. Med bare opprett-kortet og med fire syntetiske premiumhytter ble `position` og transformasjonsmatrise kontrollert i hoved- og sideposisjoner, både normalt og ved hover. Hovedkortets tastaturfokus og rutenettkortets plassering, hover og fokus ble også kontrollert. `registration`, `identity` og `refresh` ved 1280, samt `listings` ved 320 i utvikling og 1280 i produksjonsbygget, bestod fortsatt. Ingen testkall gikk til ekte tjenester.
-- Syntetiske før-/etterbilder av forside, utleieoversikt, profil og bookingdialog ved 320 og 1280 CSS-piksler er gjennomgått. Hovedlayout, kort, navigasjon, dialog og datovelger er beholdt. Profilens mockede avatar kan se forskjellig ut mellom bilder tatt før og etter asynkront profiloppslag: mockserveren returnerer ikke bildepiksler for den syntetiske avatar-URL-en. Dette er en testfixture-begrensning, ikke en endring i avatarens fallback-kode.
+These browser checks do not perform real registrations, bookings, email delivery, payments or database changes. They verify frontend behavior against fixtures; they do not verify the deployed backend.
 
-## Oppførsel som skal bevares
+## Behavior to preserve
 
-- **Vanlig CSS og lesbare DOM-klasser:** Appens egne klasser skal være beskrivende engelske kebab-case, med BEM for underelementer, for eksempel `main-navigation` / `main-navigation__profile-link`, `profile-overview` / `profile-overview__avatar`, `cabin-card` / `cabin-card__title` og `add-review-form` / `add-review-form__rating` / `add-review-form__star`. Ansvarsspesifikke blokker som `booking-request-modal` og `cookie-banner` er foretrukket fremfor generiske navn. Vanlige CSS-filer under `src/styles/` bruker de lesbare klassene direkte; `src/styles/index.css` importeres én gang i `main.jsx`, med globalt grunnlag/reset før bibliotekstiler, delte appstiler og komponent-/sidestiler. CSS-variabler dekker passende delte designverdier og beregnede elementverdier; modifikatorklasser/data-attributter dekker tilstander. Behold eksisterende klasser og tilstander (`active`, `selected`, `approve`, `reject`, `small`, `align-end`), men ingen dupliserte tokens eller genererte hash-klasser på appens egne elementer. Tredjepartsbibliotekenes interne klasser er unntatt.
+| Area | Expected behavior |
+| --- | --- |
+| User identity | Profiles, avatars, reviews, stays, listings and incoming requests belong to the current user. User changes and logout invalidate outdated responses. |
+| Session refresh | Refreshes for the same user preserve the current page and filled form fields. |
+| Registration | With a session, look up the profile before creating a missing one. Preserve existing profiles and roles. Without a session, show the email-confirmation message rather than a signed-in state. |
+| Administrator access | Require a signed-in user, matching profile ID and the `admin` role. See [Administrator access](admin-access.md) for the full expected matrix and its test coverage. |
+| Booking dates | Serialize the selected start and end dates as local `yyyy-MM-dd` values without shifting them through UTC. |
+| Guest ratings | Show review averages without a premium bonus. An unrated property has no fabricated guest score. |
+| Rating input | Use radio inputs, keyboard selection, visible focus and linked validation errors. The keyboard check explicitly checks selected and unselected star contrast, plus the selected focus outline. |
+| Demo activation | Replayed effects share the activation attempt within the current hook instance. Once a POST has started, an uncertain outcome is not automatically retried. Activation failures remain visible. |
+| Standard Vipps callback | Only an `active` subscription response produces the success redirect. The timeout button returns to the profile without a success flag. |
 
-- **Identitet og profil:** Profilinnhold skal tilhøre aktiv bruker. Det omfatter profilinformasjon og avatar, tidligere og kommende opphold, egne og innkommende vurderinger, egne annonser og abonnement samt innkommende bookingforespørsler. Ved reelt brukerbytte eller utlogging nullstilles/ugyldiggjøres brukeravhengig innhold. Forsinkede svar fra forrige identitet må ikke overskrive den aktive brukerens data.
-- **Samme bruker og tokenfornyelse:** `SIGNED_IN` eller `TOKEN_REFRESHED` for samme bruker skal ikke nullstille profilen, navigere bort eller montere skjemaer på nytt. Profilforespørsler knyttes til identitet og versjon; profilfeil vises og kan forsøkes på nytt.
-- **Registrering:** Med aktiv sesjon slår klienten opp profilen først og oppretter bare en manglende profil. En eksisterende profil eller rolle overskrives ikke. Etter gyldig profil går brukeren til forsiden med innlogget tilstand. Uten sesjon vises beskjed om e-postbekreftelse, uten å opprette profil eller vise innlogget tilstand.
-- **Administratorrolle:** Admin-ruten krever innlogget bruker, profil med samme bruker-ID og `role === 'admin'`. Ny konto får standardrollen `bruker` når profil opprettes; eksisterende rolle skal ikke overskrives ved registrering eller profiloppfriskning.
-- **Vurdering:** Stjernene bruker ekte radioknapper, tastaturvalg og synlig fokus. Normal og valgt tilstand skal være minst 3:1 i grafisk kontrast, og valgt verdi skal ha en grafisk markør utover farge alene. Valideringsfeil skal annonseres og være programmessig knyttet til vurderingskontrollen.
-- **Demo-feil:** Demoaktivering viser eksplisitt feil når den ikke kan bekreftes og gir vei til profilen. Ukjent resultat etter at en mutasjon er startet forsøkes ikke automatisk på nytt, for å unngå mulig dobbelmutasjon.
+The current rating test covers the calculation helper. The browser booking check covers a mocked request, but does not establish the winter/summer date regression across timezones. The standard Vipps callback is also separate from the browser `demo` group.
 
-## Avgrensninger
+## CSS conventions
 
-Appens tidligere styled-definisjoner og tilhørende JavaScript-stilfiler er erstattet av vanlige CSS-filer. `styled-components` er fjernet fra avhengighetene. Ubrukte JavaScript-stiltokens og `.rating-stars`-regler er fjernet etter referansesøk; `src/styles/common/index.css` og `tokens.css` er beholdt. Tidligere fjernet startmateriell omfatter `public/vite.svg`, `src/assets/logo.png`, `src/components/ui/ErrorBoundary.jsx` og `src/styles/ui/errorBoundaryStyles.js`.
+Application styles are ordinary CSS files under `src/styles/`. [src/styles/index.css](../src/styles/index.css) is imported once by `src/main.jsx`, loading global styles before library styles, shared patterns and component styles.
 
-Automatiserte tastatur-, axe- og nettleserkontroller dekker bare definerte tilstander. Manuell kontroll av full tastaturrekkefølge, skjermlesere, zoom/tekstforstørring, feilmeldinger og alle tomme/lastende tilstander gjenstår. Dette er ikke en full WCAG-vurdering eller juridisk samsvarserklæring; WCAG 2.2 A/AA er prosjektmål. Se [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) og [Uu-tilsynets oversikt over norske krav](https://www.uutilsynet.no/regelverk/kva-seier-forskrifta/153).
+Use descriptive English kebab-case classes and BEM-style element names, such as `main-navigation__profile-link`, `cabin-card__title` and `add-review-form__rating`. Shared values belong in CSS custom properties. Express UI states with modifier classes or data attributes, preserving selectors used by existing interactions. Keep required third-party classes, and avoid duplicate class tokens on application elements.
 
-Denne oppgaven omfatter frontend og dokumentasjon, ikke Supabase/backend-endringer eller en sikkerhetsgjennomgang. Mocking verifiserer ikke faktisk databaseinnhold, RLS-/tilgangsregler, Edge Functions, autentiseringskonfigurasjon eller eksterne tjenestekontrakter. Kontroller disse mot det faktiske backend-miljøet før produksjonsbruk. Ikke bruk ekte kontoer, data eller betalinger som test.
+## Remaining verification
+
+- Check booking date submission in winter and summer timezones, including daylight-saving transitions. Selecting a date must send that same calendar date.
+- Verify keyboard order, screen-reader output, text zoom and loading, empty and error states manually. Automated checks cover selected scenarios and do not establish complete accessibility conformance.
+- Complete the standard Vipps callback's association with the specific subscription being confirmed. It currently polls the owner's most recent subscription; statuses other than `active` continue waiting until timeout unless a URL error was supplied.
+- Verify availability rules against the configured backend. Listing filtering reads `bookings` with strict overlap checks; the booking dialog reads `booking_requests` and uses inclusive overlap checks.
+- Validate database permissions, Edge Functions, authentication settings and external service contracts in an isolated backend environment. Mocked frontend responses cannot establish these properties.
+
+When recording results, include the commit, Node.js version, commands, browser groups, viewport sizes and failures or warnings. Treat earlier runs as historical evidence rather than a result for the current branch.
