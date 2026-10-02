@@ -117,4 +117,4 @@ These two documents are currently written in Norwegian.
 
 ## Author
 
-[Bjørn Jaavall](https://github.com/bjonne696)
+[Bjørn - Tore M. Jaavall](https://github.com/bjonne696)
