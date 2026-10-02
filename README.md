@@ -1,76 +1,120 @@
 # Ferieplassen
 
-Ferieplassen er en norskspråklig frontend-portefølje for en markedsplass for ferieboliger. Besøkende kan utforske annonser og sende bookingforespørsler; innloggede eiere kan opprette annonser og administrere forespørsler og abonnement. Løsningen bruker React 19, JavaScript/JSX, Vite 6, React Router 7, vanlig CSS og Supabase. Den er en demonstrasjon av frontend-arbeid, ikke en selvstendig backend eller en komplett betalingstjeneste.
+Ferieplassen is a Norwegian holiday rental application. Guests can explore properties and send booking requests, while owners can create listings and manage incoming requests and listing subscriptions.
 
-## Kom i gang
+This repository contains the React frontend, its Supabase integration and automated frontend checks. The application interface is in Norwegian.
 
-Krever Node.js `>=20.11.0 <21` eller `>=22` og npm. `npm test` bruker `node --test --test-timeout`; flagget ble innført i Node 20.11.0. Den låste Vite 6-versjonen (`6.3.5`) støtter `^18.0.0 || ^20.0.0 || >=22.0.0`, og Playwright (`1.63.0`) krever Node `>=20`. Samlet krav for dette prosjektet er derfor Node 20.11.0 eller nyere i 20-serien, eller 22 og nyere; Node 21 støttes ikke av Vite. Arbeidsmiljøets Node-versjon ved dokumentasjonsoppdateringen er `v20.20.0`. `package.json` angir ikke selv et `engines`-felt. Opprett lokale Vite-miljøvariabler (for eksempel i en lokal `.env.local`, som ikke skal sjekkes inn):
+## Features
 
-| Variabelnavn | Bruk |
+- Browse rental properties, including collections of new and popular listings.
+- Filter properties by location or title, price, facilities and dates.
+- View property photos, descriptions, map locations and ratings based on guest reviews.
+- Register, sign in and manage a profile with an avatar, reviews and upcoming or past stays.
+- Send booking requests with selected dates and an optional message; owners can approve or decline requests.
+- Create listings with image uploads and manage listing subscriptions through the Supabase and Vipps integration.
+- Access administrator views for user and discount-code management.
+
+## Tech stack
+
+| Area | Tools |
 | --- | --- |
-| `VITE_SUPABASE_URL` | URL til Supabase-prosjektet og Edge Functions |
-| `VITE_SUPABASE_ANON_KEY` | Offentlig Supabase-nøkkel for klienten |
-| `VITE_DEMO_MODE` | Styrer om den sperrede demo-betalingsflyten vises |
+| User interface | React 19, JavaScript and JSX |
+| Routing | React Router 7 |
+| Development and build | Vite 6 |
+| Styling | Plain CSS, CSS custom properties and BEM-style class names |
+| Backend integration | Supabase Auth, database, Storage and Edge Functions |
+| Maps and dates | Leaflet, React Leaflet, react-date-range and date-fns |
+| Quality checks | Node.js test runner, ESLint, Playwright and axe-core |
 
-Klienten krever et tilgjengelig Supabase-prosjekt med passende tabeller, lagringsområder, tilgangsregler og Edge Functions for de flytene som skal demonstreres. Vite-variabler er tilgjengelige i nettleseren; legg aldri en service-role-nøkkel eller andre hemmeligheter i dem. Prosjektet leverer ikke backend-oppsett eller database-migrasjoner.
+## Implementation highlights
+
+- **Authentication:** [AuthProvider](src/contexts/AuthProvider.jsx) coordinates session and profile state, ignores outdated profile responses after user changes and preserves open forms during session refreshes.
+- **Asynchronous search:** [Availability request coordination](src/utils/latestAvailability.js) ignores outdated responses when filters change and keeps previous results visible while loading.
+- **Booking dates:** [Booking requests](src/hooks/useBookingRequest.js) format selected dates as local `yyyy-MM-dd` values, avoiding a UTC conversion that could shift the calendar day.
+- **Guest ratings:** [Rating calculations](src/utils/cabinRatings.js) use review averages without adding a bonus for premium listings. The property details page follows the same rule.
+- **Listing creation:** [createCabinListing](src/services/createCabinListing.js) uploads images, saves the listing and then starts its subscription.
+- **Accessibility and styling:** The interface includes a skip link, labelled controls, keyboard-operable rating inputs and dialog focus management. CSS uses one [entry point](src/styles/index.css), shared variables and component styles. Automated accessibility checks cover selected flows, rather than a full audit.
+
+## Getting started
+
+Use **Node.js 22 or newer**, npm and a compatible Supabase project. Backend setup is described under [Backend and payment scope](#backend-and-payment-scope).
+
+### 1. Install dependencies
 
 ```sh
+git clone https://github.com/bjonne696/ferieplassen.git
+cd ferieplassen
 npm ci
+```
+
+### 2. Configure the environment
+
+Create `.env.local` in the project root and replace the example values with your Supabase project settings:
+
+```dotenv
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_DEMO_MODE=true
+```
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_SUPABASE_URL` | Supabase project URL, also used to reach Edge Functions |
+| `VITE_SUPABASE_ANON_KEY` | Public client key for the Supabase project |
+| `VITE_DEMO_MODE` | Set to `true` to enable the demo payment flow |
+
+Vite exposes these values to the browser. Use the public client key and keep service-role keys and other secrets out of the frontend. Keep `.env.local` out of version control.
+
+The demo flag enables the demo UI. Supabase and the backend's demo configuration are still required.
+
+### 3. Start the application
+
+```sh
 npm run dev
 ```
 
-Utviklingsserveren er konfigurert på port 5000. For produksjonsbygg og lokal visning av bygget:
+Open [http://localhost:5000](http://localhost:5000). Restart the development server after changing environment variables.
 
-```sh
-npm run build
-npm run preview
-```
+## Scripts and checks
 
-`npm test` kjører hele Node-testpakken. `npm run lint -- --max-warnings=0` kjører ESLint uten å godta advarsler på `src`, `tests` og prosjektets Vite-/ESLint-konfigurasjon; `.mjs`-testene bruker egne Node- og nettleserglobals og regler for ubrukte variabler. `npm run build` lager produksjonsbygget. Playwright og axe-core er utviklingsavhengigheter. Installer Chromium én gang i hvert utviklingsmiljø:
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server on port 5000 |
+| `npm test` | Run the Node.js tests without a live Supabase connection |
+| `npm run lint -- --max-warnings=0` | Run ESLint and reject warnings |
+| `npm run build` | Create the production build in `dist/` |
+| `npm run preview` | Serve the production build locally on port 5000 |
+
+Stop the development server before running the preview server; both use the same port.
+
+Node.js tests cover authentication transitions, stale requests, ratings, filters, listing creation and demo activation. Browser checks run separately and use synthetic data and mocked responses.
+
+With the development server running, open a second terminal in the project root:
 
 ```sh
 npx playwright install chromium
+node --env-file=.env.local tests/browser-refactor.mjs identity 320
 ```
 
-## Klassenavn i DOM
+This checks user identity changes at 320 pixels wide. The environment file supplies the Supabase URL needed to intercept requests. See [Quality checks](docs/quality-check.md) for other groups, viewport sizes and browser setup.
 
-Appens egne DOM-elementer har beskrivende, engelske kebab-case-klassenavn. Bruk BEM for underelementer, med blokkens ansvar som utgangspunkt: `main-navigation` / `main-navigation__profile-link`, `profile-overview` / `profile-overview__avatar`, `cabin-card` / `cabin-card__title` og `add-review-form` / `add-review-form__rating` / `add-review-form__star`. Bruk også komponentansvarlige navn som `booking-request-modal` og `cookie-banner`; unngå tilfeldige nummer, brukerdata og generiske `wrapper`-/`container`-navn.
+## Backend and payment scope
 
-Vanlig CSS ligger tematisk under `src/styles/` og bruker disse klassene som selektorer. Alle appens CSS-filer hentes gjennom `src/styles/index.css`, importert én gang fra `src/main.jsx`: først globalt grunnlag/reset, deretter tredjepartsbiblioteker, så delte appstiler og til slutt komponent- og sidestiler. Delte designverdier er CSS-variabler; JavaScript-konstanter beholdes bare når logikken trenger dem. Dynamiske tilstander uttrykkes med navngitte modifikatorklasser eller data-attributter, og beregnede verdier kan settes som avgrensede CSS-variabler på elementet. Behold nødvendige tredjepartsklasser, men appens egne elementer skal ikke ha genererte hash-klasser eller dupliserte klassetokens. Eksisterende tilstandsklasser som `active`, `selected`, `approve`, `reject`, `small` og `align-end` skal fortsatt fungere.
+The frontend requires an externally configured Supabase backend. Database migrations, Row Level Security policies and Edge Function implementations are not included. Administrator route guards control the interface; the backend must enforce authorization.
 
-## Oppbygning og valg
+Subscriptions use `create-agreement`, `cancel-subscription` and `delete-subscription`. Listing creation follows the redirect URL returned by `create-agreement`. Demo use therefore requires a demo redirect from the backend and the `demo-activate-subscription` function, in addition to the frontend flag.
 
-- `src/main.jsx` monterer én `BrowserRouter` og én `AuthProvider`; `src/App.jsx` definerer rutene, inkludert profil, admin, annonsevisning og betalingscallback. `src/pages/` setter sammen sidene fra `src/components/`, mens `src/hooks/` håndterer avgrenset tilstand og asynkrone brukerflyter.
-- `src/services/` samler blant annet annonse- og abonnementsoperasjoner. `src/lib/supabaseClient.js` oppretter klienten, og `src/lib/storage.js` hjelper med lagring. `src/utils/` inneholder rene beregnings- og tilgjengelighetshjelpere. Inndelingen gjør det mulig å teste regler uten å starte hele brukergrensesnittet.
-- Stilene bruker én CSS-inngang i `src/styles/index.css`, importert én gang fra `main.jsx`: globalt sidegrunnlag/reset først, deretter Leaflet- og datovelger-CSS, delte appstiler og tematiske komponent-/sidestiler under `src/styles/`. Delte designverdier og skjemamønstre ligger i `src/styles/common/`. Komponentstiler og målrettede overstyringer legges oppå grunnstilene, fremfor brede globale selektorer. Fokusmarkering og redusert bevegelse har også globale grunnregler.
-- Hjem, til leie, nyeste og populære annonser har ulike utvalg og filtreringsregler. Ikke slå dem sammen bare fordi de viser samme type kort. Tilgjengelighets- og datoregler er skilt ut der de deles; kartet bruker Leaflet og datovalg bruker `react-date-range`.
+The standard Vipps callback requires an `active` subscription response before marking the return successful. It still polls the owner's most recent subscription; matching the callback to its specific subscription remains integration work. The timeout button returns to the profile without a success flag. Frontend tests do not verify live payments or production access policies.
 
-## Demo, betaling og backend
+Availability filtering reads approved entries from `bookings`, while the booking dialog uses `booking_requests`. Their relationship must be checked against the configured backend when setting up another environment.
 
-Demo-siden og demo-callbacken er bare tilgjengelige når `VITE_DEMO_MODE` aktiverer demo. Demoen skal ikke trekke ekte betaling: den sender brukeren gjennom en simulert betalingsside til `/vipps/callback`, der klienten kaller `demo-activate-subscription` med innlogget sesjon og relevante identifikatorer. Dette krever at den tilhørende Supabase Edge Function faktisk er tilgjengelig; ellers vises feil, ikke en påstått vellykket aktivering. Uten demo-sperren går abonnementsoppretting via `create-agreement` og en ekstern Vipps-videresending; callbacken sjekker abonnementsstatus. Klienten tilbyr også `cancel-subscription` og `delete-subscription`. Ikke bruk ekte betalingsmidler til testing.
+## Further documentation
 
-Bookingforespørsler skrives til `booking_requests`, mens datofiltrering av annonser undersøker godkjente oppføringer i `bookings` med streng datooverlapp. Dette er en eksisterende backend-forskjell, ikke noe denne porteføljen utjevner eller antar er synkronisert. Produksjonsflyter, tilgangsregler, eksterne tjenester og betalingsregler må avklares og kontrolleres mot den faktiske backenden før reell bruk. Kontaktflyten kan kalle `send-contact-email`; ikke send ekte meldinger som test.
+- [Quality checks](docs/quality-check.md) — commands, browser scenarios and verification scope.
+- [Administrator access](docs/admin-access.md) — frontend access checks and backend authorization requirements.
 
-## Avgrenset kontroll uten ekte mutasjoner
+These two documents are currently written in Norwegian.
 
-Kjør Node-testpakken, lint og bygg i avsluttende modus; `npm test` bruker `node:test` uten watch-modus og krever ikke Supabase-tilkobling:
+## Author
 
-```sh
-npm test
-npm run lint -- --max-warnings=0
-npm run build
-```
-
-`tests/browser-refactor.mjs` inneholder separate Playwright-kontroller med mockede Supabase-svar. Utviklingsserveren må allerede kjøre (standardadresse `http://localhost:5000`); angi eventuelt `BROWSER_TEST_URL` for en annen adresse. `VITE_SUPABASE_URL` må være satt i testprosessen for at testharnessen skal kunne isolere Supabase-trafikken. Playwright og Chromium installeres som beskrevet over; `axe`-gruppen bruker prosjektets axe-core-avhengighet.
-
-Kjør én avgrenset gruppe og én skjermbredde per kommando. På Linux avgrenser `timeout` kjøringen til 60 sekunder:
-
-```sh
-timeout 60s node tests/browser-refactor.mjs routes 320
-```
-
-Gruppene er `routes`, `listings`, `registration`, `booking`, `demo`, `auth`, `keyboard`, `axe`, `cabin`, `identity` og `refresh`; støttede bredder er 320, 768 og 1280 CSS-piksler. `identity` kontrollerer forsinkede svar ved A→B-brukerbytte og utlogging, mens `refresh` kontrollerer at fornyelse for samme bruker bevarer side og skjematilstand. `keyboard` og `axe` inkluderer vurderingsskjemaets radioknapper, feilmeldinger og normal-/feiltilstander; den grafiske stjernekontrasten kontrolleres eksplisitt. Harnessen mocker Supabase-svar, blokkerer eksterne forespørsler og blokkerer skrivinger til appens eget domene. Mutasjonsflyter bruker bare erstatningssvar, ikke faktiske kontoer eller produksjonsdata. Ikke send ekte meldinger, slett brukerdata eller utfør ekte betalinger under kontroll. Axe-kontroll og automatisert tastaturbruk er avgrensede kontroller, ikke full tilgjengelighetsvurdering. Se [kvalitetskontrollen](docs/quality-check.md) for atferd, avgrensninger og manuelle kontrollbehov.
-
-Profilvisningen er knyttet til innlogget brukeridentitet: profil og avatar, tidligere og kommende opphold, egne og innkommende vurderinger, egne annonser/abonnement og innkommende forespørsler skal ikke blandes mellom brukere. Identitetsbytte og utlogging ugyldiggjør foreldede svar. Fornyelse av sesjonen for samme bruker skal bevare profilvisningen og skjemaer uten sideomlasting. Vurderingsstjernene har synlig valgt tilstand utover farge, grafisk kontrast og tilgjengelig tilknyttet valideringsfeil.
-
-Tilgjengelighet vurderes med WCAG 2.2 A/AA som prosjektmål og med hensyn til [norske krav hos Uu-tilsynet](https://www.uutilsynet.no/regelverk/kva-seier-forskrifta/153). Dette er ikke en erklæring om juridisk samsvar eller om at løsningen oppfyller WCAG 2.2 AA.
+[Bjørn Jaavall](https://github.com/bjonne696)
